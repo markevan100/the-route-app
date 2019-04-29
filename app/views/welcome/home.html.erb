@@ -1,0 +1,130 @@
+<div class="hero-image" id="myImage">
+  <div class="hero-text">
+    <h1 style="font-size:30px">What route would you like to climb today?</h1>
+    <input type="text" class="form-control" id="routeIdText" placeholder="Route Id">
+    <button onclick="getRoute()" type="button" class="btn btn-primary" id="searchButton">Search</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <img id="myImage">
+    </div>
+    <div class="col-sm-4">
+      <form>
+        <div class="form-group">
+
+
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-4">
+        <!-- <h1>Weather</h1> -->
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4">
+      <form>
+        <div class="form-group" id="routeInfo" style="display:none">
+          <p>Route Name: <span id="routeName"></span></p>
+          <p>Route Grade: <span id="routeRating"></span></p>
+          <p>Route Stars: <span id="routeStars"></span></p>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-4" id="weather" style="display:none">
+      <form>
+
+        <p>Temperature: <span id="weatherTemp"></span></p>
+        <p>Humidity: <span id="weatherHum"></span></p>
+        <p>Wind: <span id="weatherWind"></span></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+
+    </div>
+    <div class="col-sm">
+      <div id="map"></div>
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+
+<script>
+  let lat, lng;
+  var map;
+  function getRoute() {
+    let id = document.getElementById('routeIdText').value
+
+    fetch(`https://www.mountainproject.com/data/get-routes?routeIds=${id}&key=MOUNTAIN_API_GOES_HERE`)
+    .then((response)=> {
+      return response.json();
+    })
+    .then((myJson)=> {
+      console.log(myJson);
+      document.getElementById('routeName').innerHTML = myJson.routes[0].name;
+      document.getElementById('routeRating').innerHTML = myJson.routes[0].rating;
+      document.getElementById('routeStars').innerHTML = myJson.routes[0].stars;
+
+      // let img = document.createElement("img");
+      // img.src = myJson.routes[0].imgMedium;
+      // document.getElementById('myImage').src = myJson.routes[0].imgMedium;
+      console.log('image path is ',myJson.routes[0].imgMedium)
+      console.log(`'url("${myJson.routes[0].imgMedium}")'`)
+      // document.getElementById("myDiv").style.backgroundImage = "url('img_tree.png')";
+      var imgpath = myJson.routes[0].imgMedium;
+      document.getElementById('myImage').style.backgroundImage = "url(\"" + myJson.routes[0].imgMedium + "\")";
+
+
+      lat = myJson.routes[0].latitude;
+      lng = myJson.routes[0].longitude;
+      document.getElementById('routeInfo').style.display = "inline";
+      document.getElementById('weather').style.display = "inline";
+      weather();
+      initMap();
+    });
+  }
+
+  function weather() {
+    if (lat && lng) {
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&APPID=WEATHER_API_GOES_HERE`)
+      .then((response)=> {
+        return response.json();
+      })
+      .then((myJson)=> {
+        console.log(myJson);
+        document.getElementById('weatherTemp').innerHTML = myJson.main.temp;
+        document.getElementById('weatherHum').innerHTML = myJson.main.humidity;
+        document.getElementById('weatherWind').innerHTML = myJson.wind.speed;
+      });
+    };
+  }
+
+  function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: lat, lng: lng},
+        zoom: 11,
+      });
+      var marker = new google.maps.Marker({
+          position: {lat: lat, lng: lng},
+          map: map,
+          title: 'Hello World!'
+        });
+      document.getElementById("map").style.height = "350px";
+      document.getElementById("routeInfo").style.color = "black";
+
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=MAP_API_KEY_GOES_HERE&callback=initMap"
+async defer></script>

@@ -9,8 +9,10 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    Welcome to the find your route app!
-    <%= yield %>
+  <body id='home-body'>
+    <%= render 'layouts/nav' %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
