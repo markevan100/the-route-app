@@ -1,5 +1,14 @@
 <div class="container">
-    <nav class="navbar navbar-default">
-            <h1><center id="thenav">Hit The Proj?</center></h1>
-      </nav>
+  <nav class="navbar navbar-default" id="thenav">
+    <h1><center> <%= link_to "Hit The Proj?", root_path, id: "navHomeLink" %></center></h1>
+  </nav>
 </div>
+
+<script>
+  $( "#navHomeLink" ).mouseover(function() {
+    $('#navHomeLink').animate({fontSize: "35px"}, 250);
+  });
+  $( "#navHomeLink" ).mouseout(function() {
+    $('#navHomeLink').animate({fontSize: "0.8em"}, 250);
+  });
+</script>

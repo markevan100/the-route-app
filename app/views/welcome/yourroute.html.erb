@@ -1,0 +1,54 @@
+<body onload="changeImage('<%= @route_image %>')">
+  <div class="heroine-image" id="bgImage">
+    <div class="hero-text">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="col-sm-4 col-sm-offset-2">
+            <form>
+              <div class="form-group routeInfo">
+                <div class="well well-lg each_box" id="testId">
+                  <h2 style="color:black;">Your Route</h2>
+                  <p><span style="color:wheat">Route Name:</span> <%= @name %></p>
+                  <p><span style="color:wheat">Route Grade:</span> <%= @rating %></p>
+                  <p><span style="color:wheat">Pitches:</span> <%= @pitch %></p>
+                  <p><span style="color:wheat">Route Stars:</span> <%= @stars %></p>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-sm-4">
+            <form>
+              <div class="form-group routeInfo">
+                <div class="well well-lg each_box">
+                  <h2 style="color:black;">Weather</h2>
+                  <h4><%= @description %></h4>
+                  <p><span style="color:wheat">Temperature:</span> <%= @temp %></p>
+                  <p><span style="color:wheat">Humidity:</span> <%= @humidity %></p>
+                  <p><span style="color:wheat">Wind:</span> <%= @wind %></p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<div id="map"></div>
+
+<script>
+  function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: gon.latt, lng: gon.lngg},
+        zoom: 11,
+      });
+      var marker = new google.maps.Marker({
+          position: {lat: gon.latt, lng: gon.lngg},
+          map: map,
+          title: 'Hello World!'
+        });
+      document.getElementById("map").style.height = "350px";
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key="
+async defer></script>

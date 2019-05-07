@@ -2,11 +2,29 @@
 @import "bootstrap";
 
 #thenav {
-  color: wheat;
+  a {
+    font-size: 0.8em;
+    color: #000;
+    letter-spacing: -1px;
+    font-weigth: none;
+  };
+  a:hover {
+    color: #000;
+    text-decoration: none;
+  };
 }
 
 .hero-image {
   background-image: url(climb.jpeg);
+  background-color: #cccccc;
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.heroine-image {
   background-color: #cccccc;
   height: 500px;
   background-position: center;
@@ -27,4 +45,28 @@
 #searchButton {
   margin-top: 15px;
   width: 100%;
+}
+
+#searchInput {
+  margin-top: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.button_wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.each_box {
+  opacity: 0.85;
+  height: 260px;
+  text-align: center;
+  background-color: #474d56;
+  border: none;
+  font-size: 130%;
+}
+
+.routeInfo p {
+  color: white;
 }

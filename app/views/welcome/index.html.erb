@@ -1,0 +1,9 @@
+<div class="hero-image">
+  <div class="hero-text">
+    <h1 style="font-size:30px">What route would you like to climb today?</h1>
+    <%= form_tag(welcome_index_path) do %>
+      <p style="color:black;"><%= text_field_tag :lookup, value = nil, id: "searchInput", placeholder:"Route Id" %></p>
+      <%= submit_tag 'Search', class: 'btn btn-primary', id: "searchButton" %>
+    <% end %>
+  </div>
+</div>

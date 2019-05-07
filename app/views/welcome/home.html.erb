@@ -1,6 +1,6 @@
 <div class="hero-image" id="myImage">
   <div class="hero-text">
-    <h1 style="font-size:30px">What route would you like to climb today?</h1>
+    <h1 style="font-size:30px">What route would you like to climb tonight?</h1>
     <input type="text" class="form-control" id="routeIdText" placeholder="Route Id">
     <button onclick="getRoute()" type="button" class="btn btn-primary" id="searchButton">Search</button>
   </div>
@@ -77,13 +77,6 @@
       document.getElementById('routeRating').innerHTML = myJson.routes[0].rating;
       document.getElementById('routeStars').innerHTML = myJson.routes[0].stars;
 
-      // let img = document.createElement("img");
-      // img.src = myJson.routes[0].imgMedium;
-      // document.getElementById('myImage').src = myJson.routes[0].imgMedium;
-      console.log('image path is ',myJson.routes[0].imgMedium)
-      console.log(`'url("${myJson.routes[0].imgMedium}")'`)
-      // document.getElementById("myDiv").style.backgroundImage = "url('img_tree.png')";
-      var imgpath = myJson.routes[0].imgMedium;
       document.getElementById('myImage').style.backgroundImage = "url(\"" + myJson.routes[0].imgMedium + "\")";
 
 
@@ -103,7 +96,6 @@
         return response.json();
       })
       .then((myJson)=> {
-        console.log(myJson);
         document.getElementById('weatherTemp').innerHTML = myJson.main.temp;
         document.getElementById('weatherHum').innerHTML = myJson.main.humidity;
         document.getElementById('weatherWind').innerHTML = myJson.wind.speed;
@@ -126,5 +118,5 @@
 
   }
 </script>
-<script src=(`https://maps.googleapis.com/maps/api/js?key=${gon.map}&callback=initMap`)
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG-ZQIYzu7CMVAE_DigRC9VM2s-dAHXUw&callback=initMap"
 async defer></script>
