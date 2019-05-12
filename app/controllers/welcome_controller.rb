@@ -1,5 +1,7 @@
 class WelcomeController < ApplicationController
   include HTTParty
+  require 'open-uri'
+  require 'nokogiri'
 
   def home
 
@@ -9,7 +11,8 @@ class WelcomeController < ApplicationController
   end
 
   def post
-    @@id = params[:lookup]
+    route = Route.where(name: params[:name]).first
+    @@id = route.route_id
     redirect_to welcome_yourroute_path
   end
 
@@ -18,7 +21,7 @@ class WelcomeController < ApplicationController
     @name = route.parsed_response["routes"][0]["name"]
     @stars = route.parsed_response["routes"][0]["stars"]
     @rating = route.parsed_response["routes"][0]["rating"]
-    @route_image = route.parsed_response["routes"][0]["imgMedium"]
+    @@route_image = route.parsed_response["routes"][0]["imgMedium"]
     @pitch = route.parsed_response["routes"][0]["pitches"]
     lat = route.parsed_response["routes"][0]["latitude"]
     lng = route.parsed_response["routes"][0]["longitude"]
@@ -30,6 +33,15 @@ class WelcomeController < ApplicationController
     @humidity = weather.parsed_response["main"]["humidity"]
     @wind = weather.parsed_response["wind"]["speed"]
     @description = weather.parsed_response["weather"][0]["description"]
+    @image = @@route_image
+  end
+
+  def comments
+    @image = @@route_image
+    doc = Nokogiri::HTML(open("https://www.mountainproject.com/route/#{@@id}"))
+    body = doc.css('.comment-body')
+    @first = body.first.text.split(" \n")[0].strip
+    @last = body.last.text.split(" \n")[0].strip
   end
 
 end
